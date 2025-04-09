@@ -10,11 +10,15 @@ import CodeSnippet from "@/components/code-snippet"
 export default function Task4Page() {
   const [nValue, setNValue] = useState("")
   const [sum, setSum] = useState<number | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const handleCalculate = () => {
+    setError(null)
+    setSum(null)
+
     const n = parseInt(nValue)
     if (isNaN(n) || n <= 0) {
-      setSum(null)
+      setError("Грешка: n трябва да е цяло положително число.")
       return
     }
 
@@ -26,10 +30,10 @@ export default function Task4Page() {
     setSum(s)
   }
 
-  // Код снипет
+  // Код снипет (основна логика):
   const codeString = `
 for (let k = 1; k <= n; k++) {
-  s += Math.pow(-1, k) * (k + 1);
+  sum += Math.pow(-1, k) * (k + 1);
 }
   `.trim()
 
@@ -38,12 +42,11 @@ for (let k = 1; k <= n; k++) {
       <CardHeader>
         <CardTitle>Задача 4</CardTitle>
         <CardDescription>
-          Изчислете сумата на първите n члена от редицата: -2 + 3 - 4 + 5 - 6 + ...
+          Редицата: -2 + 3 - 4 + 5 - 6 + ... . Изчислете сумата на първите n члена.
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Блок схема */}
         <BlockDiagram src="/block-diagrams/task4.png" alt="Блок схема Задача 4" />
 
         <div>
@@ -56,13 +59,17 @@ for (let k = 1; k <= n; k++) {
           />
         </div>
 
-        {/* Code Snippet */}
         <CodeSnippet code={codeString} />
       </CardContent>
 
-      <CardFooter className="flex gap-4">
+      <CardFooter className="flex flex-col gap-4">
         <Button onClick={handleCalculate}>Изчисли</Button>
-        {sum !== null && (
+
+        {error && (
+          <div className="text-red-500 text-sm">{error}</div>
+        )}
+
+        {sum !== null && !error && (
           <div className="text-sm">
             Резултат: {sum.toFixed(2)}
           </div>

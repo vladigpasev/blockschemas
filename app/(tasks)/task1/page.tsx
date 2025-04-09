@@ -11,27 +11,34 @@ export default function Task1Page() {
   const [diagonal, setDiagonal] = useState("")
   const [radius, setRadius] = useState<number | null>(null)
   const [circumference, setCircumference] = useState<number | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const handleCalculate = () => {
+    setError(null)
+    setRadius(null)
+    setCircumference(null)
+
     const d = parseFloat(diagonal)
     if (isNaN(d) || d <= 0) {
-      setRadius(null)
-      setCircumference(null)
+      setError("Грешка: моля, въведете положителна стойност за диагонала (d).")
       return
     }
+
     const R = d / 2
     const C = 2 * Math.PI * R
     setRadius(R)
     setCircumference(C)
   }
 
-  // Основната логика за пресмятане (code snippet)
+  // Код снипет: основна логика (без пълния error handling – само ядрото)
   const codeString = `
 const d = parseFloat(diagonal);
 if (!isNaN(d) && d > 0) {
   const R = d / 2;
   const C = 2 * Math.PI * R;
   // setRadius(R), setCircumference(C)
+} else {
+  // Грешка
 }
   `.trim()
 
@@ -40,12 +47,11 @@ if (!isNaN(d) && d > 0) {
       <CardHeader>
         <CardTitle>Задача 1</CardTitle>
         <CardDescription>
-          Въведете дължината на диагонала на квадрат и изчислете радиуса и обиколката на описаната окръжност.
+          Въведете дължината на диагонала на квадрат и изчислете радиуса и дължината на описаната окръжност.
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Блок схема */}
         <BlockDiagram src="/block-diagrams/task1.png" alt="Блок схема Задача 1" />
 
         <div>
@@ -58,17 +64,22 @@ if (!isNaN(d) && d > 0) {
           />
         </div>
 
-        {/* Code Snippet */}
         <CodeSnippet code={codeString} />
       </CardContent>
 
-      <CardFooter className="flex gap-4 flex-wrap">
+      <CardFooter className="flex flex-col gap-4">
         <Button onClick={handleCalculate}>Изчисли</Button>
 
-        {radius !== null && circumference !== null && (
+        {error && (
+          <div className="text-red-500 text-sm">
+            {error}
+          </div>
+        )}
+
+        {radius !== null && circumference !== null && !error && (
           <div className="space-y-1 text-sm">
-            <div>Радиус: {radius.toFixed(2)}</div>
-            <div>Обиколка: {circumference.toFixed(2)}</div>
+            <div>Радиус (R): {radius.toFixed(2)}</div>
+            <div>Дължина на окръжността (C): {circumference.toFixed(2)}</div>
           </div>
         )}
       </CardFooter>

@@ -10,11 +10,15 @@ import CodeSnippet from "@/components/code-snippet"
 export default function Task3Page() {
   const [nValue, setNValue] = useState("")
   const [sum, setSum] = useState<number | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const handleCalculate = () => {
+    setError(null)
+    setSum(null)
+
     const n = parseInt(nValue)
     if (isNaN(n) || n <= 0) {
-      setSum(null)
+      setError("Грешка: моля, въведете цяло положително число n.")
       return
     }
 
@@ -43,7 +47,6 @@ for (let i = 1; i <= n; i++) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Блок схема */}
         <BlockDiagram src="/block-diagrams/task3.png" alt="Блок схема Задача 3" />
 
         <div>
@@ -56,13 +59,17 @@ for (let i = 1; i <= n; i++) {
           />
         </div>
 
-        {/* Code Snippet */}
         <CodeSnippet code={codeString} />
       </CardContent>
 
-      <CardFooter className="flex gap-4">
+      <CardFooter className="flex flex-col gap-4">
         <Button onClick={handleCalculate}>Изчисли</Button>
-        {sum !== null && (
+
+        {error && (
+          <div className="text-red-500 text-sm">{error}</div>
+        )}
+
+        {sum !== null && !error && (
           <div className="text-sm">
             Резултат: {sum.toFixed(2)}
           </div>

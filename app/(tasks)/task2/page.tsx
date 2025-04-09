@@ -25,20 +25,20 @@ export default function Task2Page() {
     const B = parseFloat(b)
     const C = parseFloat(c)
 
-    // 1) Проверка дали a, b, c са положителни
-    if ([A, B, C].some((val) => isNaN(val) || val <= 0)) {
+    // 1) Положителни страни
+    if ([A, B, C].some(val => isNaN(val) || val <= 0)) {
       setError("Грешка: всички страни трябва да са положителни числа.")
       return
     }
 
-    // 2) Проверка за неравенство на триъгълника
+    // 2) Триъгълно неравенство
     if (!(A + B > C && A + C > B && B + C > A)) {
-      setError("Грешка: не е изпълнено триъгълното неравенство.")
+      setError("Грешка: не е изпълнено триъгълното неравенство (a + b > c и т.н.).")
       return
     }
 
-    // 3) Проверка за тъпоъгълен триъгълник (a^2 > b^2 + c^2)
-    // По условие приемаме, че 'a' е страната срещу ъгъла, който проверяваме.
+    // 3) Тъпоъгълен триъгълник: a^2 > b^2 + c^2
+    // По условие приемаме, че 'a' е страната, срещу ъгъла, който проверяваме.
     const obtuse = (A * A > B * B + C * C)
     if (!obtuse) {
       setError("Грешка: триъгълникът не е тъпоъгълен (a^2 <= b^2 + c^2).")
@@ -47,23 +47,21 @@ export default function Task2Page() {
     setIsObtuse(true)
 
     // Изчисляваме B = (4ac + sqrt(2b) + 1) / (4a)
-    // Внимание, b е главна буква B в кода -> използваме A, B, C.
-    // sqrt(2b) => sqrt(2 * B)
     const val = (4 * A * C + Math.sqrt(2 * B) + 1) / (4 * A)
     setResult(val)
   }
 
-  // Код снипет с основната логика (обърнете внимание на sqrt(2*B)):
+  // Код снипет с основната логика (фокус върху изчисленията):
   const codeString = `
 if (A > 0 && B > 0 && C > 0 
     && (A + B > C) 
     && (A + C > B) 
-    && (B + C > A)
+    && (B + C > A) 
     && (A*A > B*B + C*C)) {
   const val = (4*A*C + Math.sqrt(2*B) + 1) / (4*A);
   // ...
 } else {
-  // грешка
+  // Грешка
 }
   `.trim()
 
@@ -72,12 +70,13 @@ if (A > 0 && B > 0 && C > 0
       <CardHeader>
         <CardTitle>Задача 2</CardTitle>
         <CardDescription>
-          Въведете a, b, c (положителни). Проверете триъгълно неравенство и тъпоъгълност (a^2 &gt; b^2 + c^2). Ако всичко е OK, изчислете B.
+          - Проверете (1) положителни страни, (2) триъгълно неравенство, (3) тъпоъгълност. 
+          <br />
+          - Ако е ОК, изчислете: (4ac + √(2b) + 1) / (4a)
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Блок схема */}
         <BlockDiagram src="/block-diagrams/task2.png" alt="Блок схема Задача 2" />
 
         <div>
@@ -108,7 +107,6 @@ if (A > 0 && B > 0 && C > 0
           />
         </div>
 
-        {/* Code Snippet */}
         <CodeSnippet code={codeString} />
       </CardContent>
 
@@ -119,7 +117,7 @@ if (A > 0 && B > 0 && C > 0
           <div className="text-red-500 text-sm">{error}</div>
         )}
 
-        {result !== null && isObtuse && (
+        {result !== null && isObtuse && !error && (
           <div className="text-sm space-y-1">
             <div>Резултат (B): {result.toFixed(2)}</div>
             <div>Триъгълникът е тъпоъгълен.</div>
