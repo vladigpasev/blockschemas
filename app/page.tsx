@@ -1,10 +1,9 @@
 export default function HomePage() {
   return (
     <section className="space-y-4">
-      <h1 className="text-2xl font-bold">Домашно по блок схеми</h1>
+      <h1 className="text-2xl font-bold">Домашно - блок схеми</h1>
       <p>
-        Това е моето домашно за блок схеми, където реших да създам и реална Next.js
-        апликация с четири задачи. За всяка задача има снимка на блок схемата,
+        За всяка задача има снимка на блок схемата,
         както и code snippet с основната ѝ логика.
       </p>
       <p>

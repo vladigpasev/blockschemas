@@ -77,7 +77,7 @@ if (A > 0 && B > 0 && C > 0
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <BlockDiagram src="/block-diagrams/task2.png" alt="Блок схема Задача 2" />
+        <BlockDiagram src="/2.jpg" alt="Блок схема Задача 2" />
 
         <div>
           <label className="block mb-2 text-sm font-medium">Страна a:</label>

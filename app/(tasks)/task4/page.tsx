@@ -47,7 +47,7 @@ for (let k = 1; k <= n; k++) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <BlockDiagram src="/block-diagrams/task4.png" alt="Блок схема Задача 4" />
+        <BlockDiagram src="/4.jpg" alt="Блок схема Задача 4" />
 
         <div>
           <label className="block mb-2 text-sm font-medium">n:</label>

@@ -52,7 +52,7 @@ if (!isNaN(d) && d > 0) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <BlockDiagram src="/block-diagrams/task1.png" alt="Блок схема Задача 1" />
+        <BlockDiagram src="/1.jpg" alt="Блок схема Задача 1" />
 
         <div>
           <label className="block mb-2 text-sm font-medium">Диагонал (d):</label>
